@@ -20,3 +20,10 @@
 > [学做小程序在线课程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+2018032801X+2018_T1/about )
 >
 > [微信小程序入门与实战](https://ke.qq.com/course/376950?from=800005949&taid=3153936219750518 )
+
+## Stage2
+
+工作内容：数据库表设计第一版
+
+三张主要表，用户表（User），类别表（category）和账单表（bill）。  
+其中用户表和账单表，类别表和账单表之间是一对一关系，用户表和类别表之间是多对多关系，多对多关系设计了中间表(user_category)进行映射。  

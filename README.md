@@ -27,3 +27,23 @@
 
 三张主要表，用户表（User），类别表（category）和账单表（bill）。  
 其中用户表和账单表，类别表和账单表之间是一对一关系，用户表和类别表之间是多对多关系，多对多关系设计了中间表(user_category)进行映射。  
+
+```sql
+-- 查询所有人的消费账单
+select `user`.id,username,category_id,cost,bill.createDate from user,bill where `user`.id=bill.user_id
+
+-- group by多个字段，只有每个字段都相等才会归为一组，否则会认为是两个不同的分组
+-- 查询每个用户的总消费
+select `user`.id,username,sum(cost) from user,bill where `user`.id=bill.user_id group by user_id,username
+
+-- 查询所有人的每天的账单消费金额
+-- sql执行顺序 from->where->group by->select->having->select->group by
+select `user`.id,username,sum(cost),month(bill.createDate) as month,day(bill.createDate) as day from user,bill where `user`.id=bill.user_id group by user_id,username,month(bill.createDate),day(bill.createDate)
+
+
+
+-- 统计每个用户每个月各个类目的消费金额
+-- select后的别名可以在group by后使用
+select `user`.id,category.`name` as cate_name,sum(cost),bill.category_id,month(bill.createDate)  from user,category,bill where `user`.id=bill.user_id and category.id = bill.category_id group by cate_name,category_id,`user`.id,month(bill.createDate) order by `user`.id;
+```
+
